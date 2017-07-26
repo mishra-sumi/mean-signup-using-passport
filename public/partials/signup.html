@@ -1,7 +1,9 @@
 <head>
     <style type="text/css">
-        body{
-            background-color: #525252;
+        body, html{
+            height: 100%;
+            background-repeat: no-repeat;
+            background-image: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));
         }
         .centered-form{
             margin-top: 60px;
@@ -52,7 +54,7 @@
                                 <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
                             </div>
                             <label class="btn btn-success">
-                                <input type="file" name="file" ng-model="user.file" ng-disabled="uploading" ngf-select ngf-max-size="25MB" style="display:none;">Browse
+                                <input type="file" name="file" ng-model="user.file" ng-disabled="uploading" ngf-change="onChange(user.file)" ngf-select ngf-max-size="25MB" style="display:none;">Browse
                             </label>
                             <img style="width:235px;padding-left:50px;" ng-src="{{thumbnail.dataUrl|| 'https://d288gf2k0wd772.cloudfront.net/static/img/graphics/fc-dummy-investor.d66f0b9bd913.png'}}"/>
                         </div>
