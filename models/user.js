@@ -7,6 +7,7 @@ var userSchema = new Schema({
     Username : {type: String, unique: true},
     Dob : Date,
     Gender : String,
+    file: Object,
     Password : String,
     created_at : Date
 });

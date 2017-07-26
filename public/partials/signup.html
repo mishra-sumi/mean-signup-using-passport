@@ -21,7 +21,7 @@
 			    		<h3 class="panel-title" style="text-align:center;">Please sign up for Blogger Site</h3>
 			 	</div>
                 <div class="panel-body">
-                    <form name="login-form" class="login-form" ng-submit="register()">
+                    <form name="login-form" class="login-form" ng-submit="register()" enctype="multipart/form-data">
                         <div class="form-group row">
                             <label for="user-name" class="col-sm-2">Name</label>
                             <input type="text" class="form-control col-sm-10" id="user-name" name="user-name" ng-model="user.name"/>
@@ -52,7 +52,7 @@
                                 <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
                             </div>
                             <label class="btn btn-success">
-                                <input type="file" name="myfile" ng-disabled="uploading" style="display:none;">Browse
+                                <input type="file" name="file" ng-model="user.file" ng-disabled="uploading" ngf-select ngf-max-size="25MB" style="display:none;">Browse
                             </label>
                             <img style="width:235px;padding-left:50px;" ng-src="{{thumbnail.dataUrl|| 'https://d288gf2k0wd772.cloudfront.net/static/img/graphics/fc-dummy-investor.d66f0b9bd913.png'}}"/>
                         </div>

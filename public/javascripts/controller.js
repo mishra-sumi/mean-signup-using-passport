@@ -38,7 +38,8 @@ app.controller('registerCtrl',['$scope', '$location', 'AuthService', function($s
         $scope.error = false;
         $scope.disabled = true; 
         console.log('inside register');
-        AuthService.register($scope.user.username, $scope.user.password, $scope.user.name, $scope.user.date, $scope.user.gender)
+        //console.log($scope.user); exit;
+        AuthService.register($scope.user)
         .then(function(){
             $location.path('/login');
             $scope.disabled = false;

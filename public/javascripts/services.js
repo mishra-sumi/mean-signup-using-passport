@@ -70,11 +70,23 @@ angular.module('Blogger').factory('AuthService',['$q', '$timeout', '$http', func
         return deferred.promise;
     }
 
-    function register(username, password, name, dob, gender){
-        //console.log(username); console.log(password); exit;
+    function register(userData){
+        //console.log(userData); exit;//console.log(password); exit;
         var deferred = $q.defer();
+        //console.log(userData); exit;
+        var fd = new FormData();
+        fd.append('file', userData.file);
+        fd.append('username', userData.username);
+        fd.append('password', userData.password);
+        fd.append('name', userData.name);
+        fd.append('date', userData.date);
+        fd.append('gender', userData.gender);
+        /*for(var pair of fd.entries()) {
+            console.log(pair[1]); 
+        } exit;*/
+        //console.log(fd[file]); exit;
 
-        $http.post('/user/register', {username: username, password: password, name: name, dob: dob, gender: gender})
+        $http.post('/user/register', fd, { transformRequest: angular.identity, headers: {'Content-Type': undefined} })
         .success(function(data, status){
             if(status === 200 && data.status) {
                 user = true;

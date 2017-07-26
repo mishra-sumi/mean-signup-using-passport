@@ -9,9 +9,9 @@ module.exports = function(passport){
         passReqToCallback: true
     },
      function(req, username, password, done){
-        findOrCreateUser = function(){
+        findOrCreateUser = function(){ //console.log(req.body); console.log(req.file); exit;
                 // find a user in Mongo with provided username
-                User.findOne({ 'Username' :  username }, function(err, user) {
+                User.findOne({ 'Username' :  username }, function(err, user) { 
                     // In case of any error, return using the done method
                     if (err){
                         console.log('Error in SignUp: '+err);
@@ -33,6 +33,7 @@ module.exports = function(passport){
                         newUser.Dob = req.body.dob;
                         newUser.Gender = req.body.gender;
                         newUser.created_at = new Date();
+                        newUser.file = req.file;
                         //console.log(newUser); exit;
                         // save the user
                         newUser.save(function(err) {
