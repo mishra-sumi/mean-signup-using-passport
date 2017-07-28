@@ -48,3 +48,13 @@ a
 {
     color: #317;
 }
+
+.btn.dashboard
+{
+    float: right;
+}
+
+.logout
+{
+    padding-left: 40px;
+}

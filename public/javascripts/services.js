@@ -3,6 +3,7 @@ angular.module('Blogger').factory('AuthService',['$q', '$timeout', '$http', func
 
     return({
         isLoggedIn: isLoggedIn,
+        getUser: getUser,
         getUserStatus: getUserStatus,
         login: login,
         logout: logout,
@@ -15,6 +16,17 @@ angular.module('Blogger').factory('AuthService',['$q', '$timeout', '$http', func
         } else {
             return false;
         }
+    }
+
+    function getUser(){
+        return $http.post('/user/welcome')
+        .success(function(data){
+            //console.log(data); exit;
+            return data;
+        })
+        .error(function(data){
+            return false;
+        })
     }
 
     function getUserStatus(){

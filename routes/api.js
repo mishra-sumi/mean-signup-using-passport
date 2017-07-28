@@ -32,7 +32,7 @@ router.post('/login', function(req, res, next){
                     err: 'Could not login user'
                 });
             }
-            res.status(200).json({
+            res.status(200).json({ 
                 status: 'Login Successfull'
             });
         });
@@ -57,6 +57,15 @@ router.get('/status', function(req, res) {
   });
 });
 
+router.post('/welcome', function(req, res) {
+    //console.log(req.user.file.filename); exit;
+    //res.setHeader(req.user.file.mimetype); 
+    //fs.createReadStream(path.join(UPLOAD_PATH, req.user.file.filename)).pipe(res);
+    //console.log(res); exit;
+    return res.status(200).json({
+        user: req.user
+    });
+});
 
 return router;
 

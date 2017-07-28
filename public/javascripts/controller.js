@@ -55,6 +55,22 @@ app.controller('registerCtrl',['$scope', '$location', 'AuthService', function($s
 }]);
 
 app.controller('profileCtrl',['$scope', '$location', 'AuthService', function($scope, $location, AuthService){
-
-    //$scope.
+    
+    $scope.date = new Date().toString();
+    AuthService.getUser()
+    .then(function(res){
+        $scope.user = res.data.user;
+        //$scope.imageUrl = URL.createObjectURL($scope.user.file);
+        //console.log($scope.imageUrl);
+    })
+    .catch(function(){
+        $scope.user = false;
+    });
+    //console.log($scope.user); exit;
+    $scope.logout = function(){
+        AuthService.logout()
+        .then(function(){
+            $location.path('/');
+        });
+    };
 }]);
