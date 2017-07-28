@@ -10,7 +10,7 @@ app.controller('loginCtrl',['$scope', '$location', 'AuthService', function($scop
         .then(function(){
             $location.path('/welcome');
             $scope.disabled = false;
-            $scope.user = {};
+            $scope.user = {}; 
         })
         .catch(function(){
             $scope.error = true;
@@ -52,4 +52,9 @@ app.controller('registerCtrl',['$scope', '$location', 'AuthService', function($s
             $scope.user = {};
         });
     };
+}]);
+
+app.controller('profileCtrl',['$scope', '$location', 'AuthService', function($scope, $location, AuthService){
+
+    //$scope.
 }]);

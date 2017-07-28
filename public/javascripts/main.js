@@ -21,7 +21,8 @@ app.config(function($routeProvider){
         access: {restricted: false}
     })
     .when('/welcome',{
-        templateUrl: 'partials/welcome.html',
+        templateUrl: 'partials/profile.html',
+        controller: 'profileCtrl',
         access: {restricted: true}
     })
     .otherwise({
