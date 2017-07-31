@@ -2,6 +2,9 @@ var app = angular.module('Blogger');
 
 app.controller('loginCtrl',['$scope', '$location', 'AuthService', function($scope, $location, AuthService){
     
+    if(AuthService.isLoggedIn()){
+        $location.path("/welcome");
+    }
     $scope.login = function(){
         $scope.error = false;
         $scope.disabled = true;
@@ -34,6 +37,9 @@ app.controller('logoutCtrl',['$scope', '$location', 'AuthService', function($sco
 
 app.controller('registerCtrl',['$scope', '$location', 'AuthService', function($scope, $location, AuthService){
     
+    if(AuthService.isLoggedIn()){
+        $location.path("/welcome");
+    }
     $scope.register = function(){console.log('inside register');
         $scope.error = false;
         $scope.disabled = true; 
@@ -57,15 +63,15 @@ app.controller('registerCtrl',['$scope', '$location', 'AuthService', function($s
 app.controller('profileCtrl',['$scope', '$location', 'AuthService', function($scope, $location, AuthService){
     
     $scope.date = new Date().toString();
+    
     AuthService.getUser()
     .then(function(res){
+        console.log(res.data);
         $scope.user = res.data.user;
-        //$scope.imageUrl = URL.createObjectURL($scope.user.file);
-        //console.log($scope.imageUrl);
     })
     .catch(function(){
         $scope.user = false;
-    });
+    })
     //console.log($scope.user); exit;
     $scope.logout = function(){
         AuthService.logout()
