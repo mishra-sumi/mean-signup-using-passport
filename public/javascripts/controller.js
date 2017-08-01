@@ -40,9 +40,14 @@ app.controller('registerCtrl',['$scope', '$location', 'AuthService', function($s
     if(AuthService.isLoggedIn()){
         $location.path("/welcome");
     }
+   $scope.registerPage = true;
+   $scope.editpage = false;
+   $scope.error = false;
+    $scope.header = "Please sign up for Blogger Site";
     $scope.register = function(){console.log('inside register');
         $scope.error = false;
-        $scope.disabled = true; 
+        $scope.disabled = true;
+        $scope.uploading_file = true; 
         console.log('inside register');
         //console.log($scope.user); exit;
         AuthService.register($scope.user)
@@ -71,12 +76,64 @@ app.controller('profileCtrl',['$scope', '$location', 'AuthService', function($sc
     })
     .catch(function(){
         $scope.user = false;
-    })
+    });
     //console.log($scope.user); exit;
     $scope.logout = function(){
         AuthService.logout()
         .then(function(){
             $location.path('/');
         });
+    };
+    $scope.delete = function(){
+        //console.log("inside delete function"); exit;
+        AuthService.deleteUser()
+        .then(function(res){
+            console.log(res.data);
+            $location.path("/");
+        })
+        .catch(function(){
+            console.log("something went wrong");
+        });
+    };
+}]);
+
+app.controller('editCtrl', ['$scope', '$location', 'AuthService', function($scope, $location, AuthService){
+
+   $scope.header = "Edit your account"; 
+   $scope.registerPage = false;
+   $scope.editPage = true;
+   $scope.user = {};
+   $scope.error = false;
+   $scope.uploading = true;
+   AuthService.getUser()
+    .then(function(res){
+        $scope.error = false;
+        console.log(res.data.user);
+        $scope.newuser = res.data.user;
+        $scope.user.name = $scope.newuser.Name;
+        $scope.user.username = $scope.newuser.Username;
+        $scope.user.file = $scope.newuser.file;
+        $scope.user.gender = $scope.newuser.Gender;
+        $scope.user.password = "";
+        $scope.user.date = new Date($scope.newuser.Dob);
+        $scope.img = 'http://localhost:3000/images/'+$scope.newuser.file.filename;
+        //console.log($scope.user);
+    })
+    .catch(function(){
+        $scope.error = true;
+        $scope.errorMessage = "Something went wrong";
+    });
+    $scope.register = function(){ //console.log($scope.user); exit;
+        AuthService.updateUser($scope.user)
+        .then(function(res){
+            $scope.error = false;
+            console.log(res.data);
+        })
+        .catch(function(){
+            $scope.error = true;
+            $scope.errorMessage = "Something went wrong";
+            $scope.disabled = false;
+            $scope.user = {};
+        })
     };
 }]);

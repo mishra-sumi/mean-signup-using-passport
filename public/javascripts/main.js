@@ -25,6 +25,11 @@ app.config(function($routeProvider){
         controller: 'profileCtrl',
         access: {restricted: true}
     })
+    .when('/edit', {
+        templateUrl: 'partials/signup.html',
+        controller: 'editCtrl',
+        access: {restricted: true}
+    })
     .otherwise({
         redirectTo: '/'
     });

@@ -7,7 +7,9 @@ angular.module('Blogger').factory('AuthService',['$q', '$timeout', '$http', func
         getUserStatus: getUserStatus,
         login: login,
         logout: logout,
-        register: register
+        register: register,
+        updateUser: updateUser,
+        deleteUser: deleteUser
     });
 
     function isLoggedIn(){
@@ -26,6 +28,38 @@ angular.module('Blogger').factory('AuthService',['$q', '$timeout', '$http', func
         })
         .error(function(data){
             return false;
+        })
+    }
+
+    function updateUser(userData){
+
+        var deferred = $q.defer();
+        //console.log(userData); exit;
+        
+        return $http.post('/user/update', { userData: userData })
+        .success(function(data){
+            if(status === 200 && data.status) {
+                user = true;
+                deferred.resolve();
+            } else {
+                user = false;
+                deferred.reject();
+            }
+        })
+        .error(function(data){
+            user = false;
+            deferred.reject();
+        });
+        return deferred.promise;
+    }
+
+    function deleteUser(){
+        return $http.get('/user/delete')
+        .success(function(data){
+            return data;
+        })
+        .error(function(data){
+            return data;
         })
     }
 

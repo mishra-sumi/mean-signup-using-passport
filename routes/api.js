@@ -64,6 +64,44 @@ router.post('/welcome', function(req, res) {
     });
 });
 
+router.get('/delete', function(req,res) {
+    //console.log(req.user._id); exit;
+    var response = {};
+    User.findByIdAndRemove(req.user._id, function(err, userp){
+        response = {
+            message: "User deleted Successfully",
+            user: userp.Name
+        }
+    });
+    return res.status(200).json({
+        response: response
+    });
+});
+
+router.post('/update', function(req,res){ //console.log(req.body.userData); exit;
+    var response = {};
+    User.findById(req.user._id, function(err, usertemp){
+        if(err){
+            return res.status(500);
+        } else {
+            usertemp.Name = req.body.userData.name || usertemp.Name;
+            usertemp.Username = req.body.userData.username || usertemp.Username;
+            usertemp.Gender = req.body.userData.gender || usertemp.Gender;
+            usertemp.Dob = req.body.userData.date || usertemp.Dob;
+            
+            usertemp.save(function (err, usertemp) {
+                if (err) {
+                    return res.status(500);
+                }
+                return res.status(200).json({
+                    response: usertemp
+                });
+            });
+
+        }
+    })
+});
+
 return router;
 
 }
