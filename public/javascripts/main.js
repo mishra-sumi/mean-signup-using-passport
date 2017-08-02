@@ -26,8 +26,18 @@ app.config(function($routeProvider){
         access: {restricted: true}
     })
     .when('/edit', {
-        templateUrl: 'partials/signup.html',
+        templateUrl: 'partials/edit.html',
         controller: 'editCtrl',
+        access: {restricted: true}
+    })
+    .when('/myblog', {
+        templateUrl: 'partials/bloglist.html',
+        controller: 'bloglistCtrl',
+        access: {restricted: true}
+    })
+    .when('/addtopic', {
+        templateUrl: 'partials/addtopic.html',
+        controller: 'addCtrl',
         access: {restricted: true}
     })
     .otherwise({

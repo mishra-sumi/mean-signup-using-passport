@@ -29,19 +29,8 @@
     border-top: 0;
 }
 .toppad
-{margin-top:20px;
-}
-
-body, html
 {
-    height: 100%;
-    background-repeat: no-repeat;
-    background-image: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));
-}
-
-a
-{
-    color: #fff !important;
+    margin-top:20px;
 }
 
 .text-info
@@ -58,3 +47,8 @@ a
 {
     padding-left: 40px;
 }
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    padding: 18px;
+}
+

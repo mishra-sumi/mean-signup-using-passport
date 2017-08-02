@@ -40,8 +40,6 @@ app.controller('registerCtrl',['$scope', '$location', 'AuthService', function($s
     if(AuthService.isLoggedIn()){
         $location.path("/welcome");
     }
-   $scope.registerPage = true;
-   $scope.editpage = false;
    $scope.error = false;
     $scope.header = "Please sign up for Blogger Site";
     $scope.register = function(){console.log('inside register');
@@ -99,11 +97,10 @@ app.controller('profileCtrl',['$scope', '$location', 'AuthService', function($sc
 
 app.controller('editCtrl', ['$scope', '$location', 'AuthService', function($scope, $location, AuthService){
 
-   $scope.header = "Edit your account"; 
-   $scope.registerPage = false;
-   $scope.editPage = true;
+   $scope.header = "Edit your account";
    $scope.user = {};
    $scope.error = false;
+   $scope.success = false;
    $scope.uploading = true;
    AuthService.getUser()
     .then(function(res){
@@ -123,10 +120,11 @@ app.controller('editCtrl', ['$scope', '$location', 'AuthService', function($scop
         $scope.error = true;
         $scope.errorMessage = "Something went wrong";
     });
-    $scope.register = function(){ //console.log($scope.user); exit;
+    $scope.edit = function(){ //console.log($scope.user); exit;
         AuthService.updateUser($scope.user)
         .then(function(res){
-            $scope.error = false;
+            $scope.success = true;
+            $scope.successMessage = "Your Profile Updated Successfully";
             console.log(res.data);
         })
         .catch(function(){
@@ -136,4 +134,44 @@ app.controller('editCtrl', ['$scope', '$location', 'AuthService', function($scop
             $scope.user = {};
         })
     };
+}]);
+
+app.controller('addCtrl', ['$scope', '$location', '$http', function($scope, $location, $http){
+    //console.log("inside addCtrl controller"); exit;
+    $scope.error = false;
+    $scope.success = false;
+    $scope.add = function() { //console.log($scope.blog); exit;
+
+        var fd = new FormData();
+        fd.append('file', $scope.blog.file);
+        fd.append('title', $scope.blog.title);
+        fd.append('topic', $scope.blog.topic);
+
+        $http.post('/topic/add', fd, { transformRequest: angular.identity, headers: {'Content-Type': undefined} })
+        .success(function(data, status){
+            console.log(data);
+            $scope.error = false;
+            $scope.success = true;
+            $scope.successMessage = data.response;
+        })
+        .error(function(data){
+            $scope.success = false;
+            $scope.error = true;
+            $scope.errorMessage = "Something went wrong";
+        });
+    };
+}]);
+
+app.controller('bloglistCtrl', ['$scope', '$location', '$http', function($scope, $location, $http){
+
+    $http.get('/topic/list')
+    .success(function(data, status){
+        $scope.name = data.response.name;
+        $scope.data = data.response.data;
+        $scope.filename = data.response.filename;
+        console.log(data);
+    })
+    .error(function(data){
+        console.log('something went wrong');
+    });
 }]);

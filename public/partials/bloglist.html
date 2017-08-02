@@ -1,0 +1,93 @@
+<head>
+    <link rel="stylesheet" href="/stylesheets/bloglist.css" type="text/css">
+</head>
+<div id="throbber" style="display:none; min-height:120px;"></div>
+<div id="noty-holder"></div>
+<div id="wrapper">
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/#/welcome">
+                <img src="http://localhost:3000/images/monkey.png" alt="LOGO">
+            </a>
+        </div>
+        <!-- Top Menu Items -->
+        <ul class="nav navbar-right top-nav">
+            <!--<li><a href="#" data-placement="bottom" data-toggle="tooltip" data-original-title="Stats"><i class="fa fa-bar-chart-o"></i>
+                </a>
+            </li>-->            
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown"><span class="user-avatar pull-left" style="margin-right:8px; margin-top:-5px;">
+                                        <img src="http://localhost:3000/images/{{filename}}" class="<img-re></img-re>sponsive img-circle" ng-attr-title="{{name}}" alt="" width="30px" height="30px">
+                                    </span> {{name}}  <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="/#/edit"><i class="fa fa-fw fa-user"></i> Edit Profile</a></li>
+                    <li><a href="#"><i class="fa fa-fw fa-cog"></i> Change Password</a></li>
+                    <!--<li class="divider"></li>-->
+                    <!--<li><a href="#"><i class="fa fa-fw fa-power-off"></i> Logout</a></li>-->
+                </ul>
+            </li>
+        </ul>
+        <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav side-nav">
+                <li>
+                    <a data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-fw fa-search"></i> BLOG <i class="fa fa-fw fa-angle-down pull-right"></i></a>
+                    <ul id="submenu-1" class="collapse">
+                        <li><a href="/#/myblog"><i class="fa fa-angle-double-right"></i> MY BLOGS</a></li>
+                        <li><a href="/#/addtopic"><i class="fa fa-angle-double-right"></i> ADD TOPIC</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a data-toggle="collapse" data-target="#submenu-2"><i class="fa fa-fw fa-star"></i>  ACCOUNT <i class="fa fa-fw fa-angle-down pull-right"></i></a>
+                    <ul id="submenu-2" class="collapse">
+                        <li><a href="/#/welcome"><i class="fa fa-angle-double-right"></i> PROFILE</a></li>
+                        <li><a href="/#/edit"><i class="fa fa-angle-double-right"></i> EDIT</a></li>
+                        <li><a ng-click="delete()"><i class="fa fa-angle-double-right"></i> DELETE ACCOUNT</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </nav>
+
+
+    <div id="page-wrapper">  
+        <div class="container-fluid" ng-repeat="item in data">
+            <div class="well">
+                <div class="media">
+                    <a class="pull-left">
+                        <img class="media-object" src="http://localhost:3000/topicImages/{{item.file.filename}}">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{item.title}}</h4>
+                        <p class="text-right">By {{name}}</p>
+                        <p>{{item.topic}}</p>
+                        <ul class="list-inline list-unstyled">
+                            <li><span><i class="glyphicon glyphicon-calendar"></i> {{item.created_at}} </span></li>
+                            <li>|</li>
+                            <span><i class="glyphicon glyphicon-comment"></i> 0 comments</span>
+                            <li>|</li>
+                            <li>
+                                <span class="glyphicon glyphicon-star"></span>
+                                <span class="glyphicon glyphicon-star"></span>
+                                <span class="glyphicon glyphicon-star"></span>
+                                <span class="glyphicon glyphicon-star"></span>
+                                <span class="glyphicon glyphicon-star-empty"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>        
+            </div>
+        </div>
+    </div>	
+    <!-- /#page-wrapper -->
+</div><!-- /#wrapper -->

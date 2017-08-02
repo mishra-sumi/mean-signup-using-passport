@@ -45,6 +45,9 @@ app.use('/users', users);
 var routes = require('./routes/api')(passport);
 app.use('/user/',routes);
 
+var topic = require('./routes/topic');
+app.use('/topic',topic);
+
 mongoose.connect('mongodb://localhost/Blogger');
 
 // catch 404 and forward to error handler

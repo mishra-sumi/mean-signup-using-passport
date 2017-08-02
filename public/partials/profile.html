@@ -1,28 +1,76 @@
 <head>
     <link rel="stylesheet" href="/stylesheets/profile.css" type="text/css">
+    <link rel="stylesheet" href="/stylesheets/bloglist.css" type="text/css">
 </head>
+<div id="throbber" style="display:none; min-height:120px;"></div>
+<div id="noty-holder"></div>
+<div id="wrapper">
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/#/welcome">
+                <img src="http://localhost:3000/images/monkey.png" alt="LOGO">
+            </a>
+        </div>
+        <!-- Top Menu Items -->
+        <ul class="nav navbar-right top-nav">
+            <!--<li><a href="#" data-placement="bottom" data-toggle="tooltip" data-original-title="Stats"><i class="fa fa-bar-chart-o"></i>
+                </a>
+            </li>-->            
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown"><span class="user-avatar pull-left" style="margin-right:8px; margin-top:-5px;">
+                                        <img src="http://localhost:3000/images/{{user.file.filename}}" class="img-responsive img-circle" ng-attr-title="{{user.Name}}" alt="John Doe" width="30px" height="30px">
+                                    </span> {{user.Name}}  <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="/#/edit"><i class="fa fa-fw fa-user"></i> Edit Profile</a></li>
+                    <li><a href="#"><i class="fa fa-fw fa-cog"></i> Change Password</a></li>
+                    <li class="divider"></li>
+                    <li><a ng-click='logout()'><i class="fa fa-fw fa-power-off"></i> Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+        <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav side-nav">
+                <li>
+                    <a data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-fw fa-search"></i> BLOG <i class="fa fa-fw fa-angle-down pull-right"></i></a>
+                    <ul id="submenu-1" class="collapse">
+                        <li><a href="/#/myblog"><i class="fa fa-angle-double-right"></i> MY BLOGS</a></li>
+                        <li><a href="/#/addtopic"><i class="fa fa-angle-double-right"></i> ADD TOPIC</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a data-toggle="collapse" data-target="#submenu-2"><i class="fa fa-fw fa-star"></i>  ACCOUNT <i class="fa fa-fw fa-angle-down pull-right"></i></a>
+                    <ul id="submenu-2" class="collapse">
+                        <li><a href="/#/edit"><i class="fa fa-angle-double-right"></i> EDIT</a></li>
+                        <li><a ng-click="delete()"><i class="fa fa-angle-double-right"></i> DELETE ACCOUNT</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </nav>
 <div class="container">
       <div class="row">
-      <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
-           <a href="/#/edit" >Edit Profile</a>
-
-        <a class="logout" ng-click='logout()'>Logout</a>
-       <br>
-<p class=" text-info">{{date}}</p>
-      </div>
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
-   
-   
           <div class="panel panel-info">
             <div class="panel-heading">
               <h3 class="panel-title">{{user.Name}}</h3>
             </div>
             <div class="panel-body">
               <div class="row">
-                <div class="col-md-3 col-lg-3 " align="center"> <img ng-title="{{user.Name}}" ng-alt="{{user.Name}}" src="http://localhost:3000/images/{{user.file.filename}}" class="img-circle img-responsive"> </div>
-                
-                
-                <div class=" col-md-9 col-lg-9 "> 
+                <div class=" col-md-12 col-lg-12 ">
+                  <div align="center">
+                    <img ng-attr-title="{{user.Name}}" ng-alt="{{user.Name}}" src="http://localhost:3000/images/{{user.file.filename}}" class="img-circle img-responsive">
+                  </div> 
                   <table class="table table-user-information">
                     <tbody>
                       <tr>
@@ -51,62 +99,51 @@
                       </tr>
                       <tr>
                         <td>Phone Number</td>
-                        <td>123-4567-890(Landline)<br><br>555-4567-890(Mobile)</td>
+                        <td>123-4567-890(Landline)</td>
                       </tr>
-                     
                     </tbody>
                   </table>
-                  
-                  <a href="#" class="btn btn-primary">My Blogs</a>
-                  <a href="#" class="btn btn-primary dashboard">DashBoard</a>
                 </div>
               </div>
             </div>
-                 <div class="panel-footer">
-                        <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
-                        <span class="pull-right">
-                            <a href="/#/edit" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
-                            <a ng-click="delete()" data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
-                        </span>
-                    </div>
-            
           </div>
         </div>
       </div>
     </div>
     <script>
-        $(document).ready(function() {
-            var panels = $('.user-infos');
-            var panelsButton = $('.dropdown-user');
-            panels.hide();
+      $(document).ready(function() {
+          var panels = $('.user-infos');
+          var panelsButton = $('.dropdown-user');
+          panels.hide();
 
-            //Click dropdown
-            panelsButton.click(function() {
-                //get data-for attribute
-                var dataFor = $(this).attr('data-for');
-                var idFor = $(dataFor);
+          //Click dropdown
+          panelsButton.click(function() {
+              //get data-for attribute
+              var dataFor = $(this).attr('data-for');
+              var idFor = $(dataFor);
 
-                //current button
-                var currentButton = $(this);
-                idFor.slideToggle(400, function() {
-                    //Completed slidetoggle
-                    if(idFor.is(':visible'))
-                    {
-                        currentButton.html('<i class="glyphicon glyphicon-chevron-up text-muted"></i>');
-                    }
-                    else
-                    {
-                        currentButton.html('<i class="glyphicon glyphicon-chevron-down text-muted"></i>');
-                    }
-                })
-            });
+              //current button
+              var currentButton = $(this);
+              idFor.slideToggle(400, function() {
+                  //Completed slidetoggle
+                  if(idFor.is(':visible'))
+                  {
+                      currentButton.html('<i class="glyphicon glyphicon-chevron-up text-muted"></i>');
+                  }
+                  else
+                  {
+                      currentButton.html('<i class="glyphicon glyphicon-chevron-down text-muted"></i>');
+                  }
+              })
+          });
 
 
-            $('[data-toggle="tooltip"]').tooltip();
+          $('[data-toggle="tooltip"]').tooltip();
 
-            $('button').click(function(e) {
-                e.preventDefault();
-                alert("This is a demo.\n :-)");
-            });
-        });
+          $('button').click(function(e) {
+              e.preventDefault();
+              alert("This is a demo.\n :-)");
+          });
+      });
     </Script>
+</div>
