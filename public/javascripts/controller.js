@@ -175,3 +175,8 @@ app.controller('bloglistCtrl', ['$scope', '$location', '$http', function($scope,
         console.log('something went wrong');
     });
 }]);
+
+app.controller('indexCtrl', ['$scope', '$location', '$http', function($scope, $location, $http){
+
+    
+}]);

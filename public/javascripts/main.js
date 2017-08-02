@@ -40,6 +40,11 @@ app.config(function($routeProvider){
         controller: 'addCtrl',
         access: {restricted: true}
     })
+    .when('/home', {
+        templateUrl: 'partials/index.html',
+        controller: 'indexCtrl',
+        access: {restricted: true}
+    })
     .otherwise({
         redirectTo: '/'
     });
