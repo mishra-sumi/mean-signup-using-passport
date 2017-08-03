@@ -178,5 +178,31 @@ app.controller('bloglistCtrl', ['$scope', '$location', '$http', function($scope,
 
 app.controller('indexCtrl', ['$scope', '$location', '$http', function($scope, $location, $http){
 
-    
+    $scope.comment = function(){
+        angular.forEach($scope.data, function(key, value){
+            if(key.comment){
+                $http.post('/topic/addcomments', { topicId: key._id, comment: key.comment })
+                .success(function(data, status){
+                    console.log(data);
+                })
+                .error(function(data){
+                    console.log('something went wrong');
+                });
+                //console.log(key.comment);
+            }
+        });
+        console.log($scope.data);
+        //console.log("inside comment");
+    };
+    $http.get('/topic/allblog')
+    .success(function(data, status){
+        $scope.name = data.response.name;
+        $scope.data = data.response.data;
+        $scope.filename = data.response.filename;
+        $scope.username = data.response.username;
+        console.log(data);
+    })
+    .error(function(data){
+        console.log('something went wrong');
+    });
 }]);
