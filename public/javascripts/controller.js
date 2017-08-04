@@ -194,6 +194,13 @@ app.controller('indexCtrl', ['$scope', '$location', '$http', function($scope, $l
         console.log($scope.data);
         //console.log("inside comment");
     };
+    $http.get('/topic/allcomments')
+    .success(function(data, status){
+        console.log(data.response);
+    })
+    .error(function(data){
+        console.log('Something went wrong');
+    });
     $http.get('/topic/allblog')
     .success(function(data, status){
         $scope.name = data.response.name;

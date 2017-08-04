@@ -88,8 +88,20 @@ router.post('/addcomments', function(req, res){
 router.get('/allcomments', function(req, res){
 
     var data = {};
-    return res.status(200).json({
-        response: "all comments"
+    Comment.find({}).populate({
+        path: 'topic_id',
+        select: 'title creater -_id',
+        model: 'Topic'
+    }).exec(function(err, comments){
+        if(err){ 
+            return res.status(500).json({
+                response: err
+            });
+        } else {
+            return res.status(200).json({
+                response: comments
+            });
+        }
     });
 });
 
