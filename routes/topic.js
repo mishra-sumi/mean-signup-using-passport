@@ -56,7 +56,10 @@ router.get('/allblog', function(req, res){
     name = req.user.Name;
     filename = req.user.file.filename;
     Topic.find({}).populate({
-        path: 'creater comment'
+        path: 'creater comment',
+        populate: {
+            path: 'creater'
+        }
     }).exec(function(err, topic){
         if(err){
             return res.status(500).json({
@@ -64,7 +67,7 @@ router.get('/allblog', function(req, res){
             });
         } else {
             return res.status(200).json({
-                response: {data: topic}
+                response: {data: topic, name: name, filename: filename, username: username}
             });
         }
     });
