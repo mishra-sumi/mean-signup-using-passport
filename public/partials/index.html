@@ -113,10 +113,10 @@
                 <div class="panel-body">
                     <div class="pull-left">
                         <a href="#">
-                            <img class="media-object img-circle" src="http://localhost:3000/images/{{filename}}" width="50px" height="50px" style="margin-right:8px; margin-top:-5px;">
+                            <img class="media-object img-circle" src="http://localhost:3000/images/{{item.creater.file.filename}}" width="50px" height="50px" style="margin-right:8px; margin-top:-5px;">
                         </a>
                     </div>
-                    <h4><a href="#" style="text-decoration:none;"><strong>{{name}}</strong></a> – <small><small><a href="#" style="text-decoration:none; color:grey;"><i><i class="fa fa-clock-o" aria-hidden="true"></i> 42 minutes ago</i></a></small></small></h4>
+                    <h4><a href="#" style="text-decoration:none;"><strong>{{item.creater.Name}}</strong></a> – <small><small><a href="#" style="text-decoration:none; color:grey;"><i><i class="fa fa-clock-o" aria-hidden="true"></i> 42 minutes ago</i></a></small></small></h4>
                     <span>
                         <div class="navbar-right">
                             <div class="dropdown">
@@ -154,9 +154,7 @@
                     </div>
                     <hr>
                     <div>
-                        <a class="btn btn-default btn-xs"><i class="fa fa-bars" aria-hidden="true"></i> Show 12 more comments</a>
-                        <hr>
-                        <div class="post-content">
+                        <div class="post-content" ng-repeat="comm in item.comment">
                             <div class="panel-default">
                                 <div class="panel-body">
                                     <div class="pull-left">
@@ -167,8 +165,7 @@
                                     <h4><a href="#" style="text-decoration:none;"><strong>✪ SтeғOғғιcιel ✪ ツ</strong></a></h4>
                                     <hr>
                                     <div class="post-content">
-                                        Comment example.<br><br>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque at arcu sapien. Donec laoreet, nisl quis tempor hendrerit, libero augue blandit turpis, in dignissim odio mauris eu tortor. Ut hendrerit ipsum elit, a elementum nulla ultrices eu. In posuere mollis efficitur. Maecenas justo turpis, tristique sit amet ultricies quis, molestie eget ex. Nam vestibulum consequat tincidunt. Morbi vitae placerat sapien. Phasellus quis mi tincidunt sem scelerisque tincidunt. Ut viverra porttitor sagittis. Phasellus aliquam auctor purus, id sollicitudin mauris pulvinar ac. Vivamus vel erat nec orci ultricies iaculis quis sit amet augue. Vestibulum aliquam felis lorem, interdum porttitor sapien sodales ac. Maecenas id ullamcorper risus. Suspendisse id dui sed urna rutrum pharetra. Nam eu lectus et orci vestibulum bibendum. Mauris et pulvinar dui, ac facilisis leo.
+                                        {{comm.comment}}
                                         <br><small><small><a href="#" style="text-decoration:none; color:grey;"><i><i class="fa fa-clock-o" aria-hidden="true"></i> 12 minutes ago</i></a></small></small>
                                     </div>
                                 </div>
@@ -179,12 +176,12 @@
                     <div class="media">
                         <div class="pull-left">
                             <a href="#">
-                                <img class="media-object img-circle" ng-src="http://localhost:3000/images/{{filename}}" width="35px" height="35px" style="margin-left:3px; margin-right:-5px;">
+                                <img class="media-object img-circle" ng-src="http://localhost:3000/images/{{item.creater.file.filename}}" width="35px" height="35px" style="margin-left:3px; margin-right:-5px;">
                             </a>
                         </div>
                         <div class="media-body">
                             <form name="add-comment-form" class="add-comment-form" ng-submit="comment()" enctype="multipart/form-data">
-                            <textarea class="form-control" id="topic" rows="1" ng-model="item.comment"></textarea>
+                            <textarea class="form-control" id="topic" rows="1" ng-model="item.comment.char"></textarea>
                             <button type="submit" class="btn btn-primary">Submit</button>
                             </form>
                         </div>

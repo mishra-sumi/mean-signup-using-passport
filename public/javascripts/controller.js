@@ -42,6 +42,7 @@ app.controller('registerCtrl',['$scope', '$location', 'AuthService', function($s
     }
    $scope.error = false;
     $scope.header = "Please sign up for Blogger Site";
+    $scope.registerPage = true;
     $scope.register = function(){console.log('inside register');
         $scope.error = false;
         $scope.disabled = true;
@@ -136,10 +137,19 @@ app.controller('editCtrl', ['$scope', '$location', 'AuthService', function($scop
     };
 }]);
 
-app.controller('addCtrl', ['$scope', '$location', '$http', function($scope, $location, $http){
+app.controller('addCtrl', ['$scope', '$location', '$http', 'AuthService', function($scope, $location, $http, AuthService){
     //console.log("inside addCtrl controller"); exit;
     $scope.error = false;
     $scope.success = false;
+    AuthService.getUser()
+    .then(function(res){
+        console.log(res.data);
+        $scope.name = res.data.user.Name;
+        $scope.filename = res.data.user.file.filename;
+    })
+    .catch(function(){
+        console.log("Something went wrong");
+    });
     $scope.add = function() { //console.log($scope.blog); exit;
 
         var fd = new FormData();
@@ -178,10 +188,10 @@ app.controller('bloglistCtrl', ['$scope', '$location', '$http', function($scope,
 
 app.controller('indexCtrl', ['$scope', '$location', '$http', function($scope, $location, $http){
 
-    $scope.comment = function(){
-        angular.forEach($scope.data, function(key, value){
-            if(key.comment){
-                $http.post('/topic/addcomments', { topicId: key._id, comment: key.comment })
+    $scope.comment = function(){ //console.log($scope.data); exit;
+        angular.forEach($scope.data, function(key, value){ 
+            if(key.comment.char){ //console.log(key.comment.char); exit;
+                $http.post('/topic/addcomments', { topicId: key._id, comment: key.comment.char })
                 .success(function(data, status){
                     console.log(data);
                 })
@@ -194,13 +204,6 @@ app.controller('indexCtrl', ['$scope', '$location', '$http', function($scope, $l
         console.log($scope.data);
         //console.log("inside comment");
     };
-    $http.get('/topic/allcomments')
-    .success(function(data, status){
-        console.log(data.response);
-    })
-    .error(function(data){
-        console.log('Something went wrong');
-    });
     $http.get('/topic/allblog')
     .success(function(data, status){
         $scope.name = data.response.name;

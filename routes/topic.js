@@ -13,7 +13,7 @@ router.post('/add', upload.single('file'), function(req, res){ //console.log(req
     topic.title = req.body.title;
     topic.topic = req.body.topic;
     topic.file = req.file;
-    topic.creater = req.user.Username;
+    topic.creater = req.user._id;
     topic.created_at = new Date();
     topic.save(function(err){
         if(err){
@@ -21,6 +21,10 @@ router.post('/add', upload.single('file'), function(req, res){ //console.log(req
                 response: err
             });
         } else {
+            User.findByIdAndUpdate(req.user._id, {$push:{topic: topic._id},}, {new: true}, function(err, data){
+                if(err) throw err;
+                console.log(data);
+            });
             return res.status(200).json({
                 response: "Topic added successfully"
             });
@@ -30,7 +34,7 @@ router.post('/add', upload.single('file'), function(req, res){ //console.log(req
 
 router.get('/list', function(req, res){
 
-    username = req.user.Username;
+    username = req.user._id;
     name = req.user.Name;
     filename = req.user.file.filename;
     Topic.find({creater: username}, function(err, obj){
@@ -51,14 +55,16 @@ router.get('/allblog', function(req, res){
     username = req.user.Username;
     name = req.user.Name;
     filename = req.user.file.filename;
-    Topic.find(function(err, obj){
+    Topic.find({}).populate({
+        path: 'creater comment'
+    }).exec(function(err, topic){
         if(err){
             return res.status(500).json({
                 response: err
             });
         } else {
             return res.status(200).json({
-                response: {data: obj, name: name, filename: filename, username: username}
+                response: {data: topic}
             });
         }
     });
@@ -70,7 +76,7 @@ router.post('/addcomments', function(req, res){
     var comment = new Comment();
     comment.topic_id = req.body.topicId;
     comment.comment = req.body.comment;
-    comment.creater = req.user.Username;
+    comment.creater = req.user._id;
     comment.created_at = new Date();
     comment.save(function(err){
         if(err){
@@ -78,6 +84,10 @@ router.post('/addcomments', function(req, res){
                 response: err
             });
         } else {
+            Topic.findByIdAndUpdate(req.body.topicId, {$push: {comment: comment._id},}, function(err, data){
+                if(err) throw err;
+                console.log(data);
+            });
             return res.status(200).json({
                 response: "Comment Successfull"
             });
@@ -88,10 +98,8 @@ router.post('/addcomments', function(req, res){
 router.get('/allcomments', function(req, res){
 
     var data = {};
-    Comment.find({}).populate({
-        path: 'topic_id',
-        select: 'title creater -_id',
-        model: 'Topic'
+    Topic.find({}).populate({
+        path: 'creater comment'
     }).exec(function(err, comments){
         if(err){ 
             return res.status(500).json({

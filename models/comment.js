@@ -3,9 +3,9 @@ var Schema = mongoose.Schema;
 
 ObjectId = Schema.ObjectId;
 var commentsSchema = new Schema({
-    topic_id : ObjectId,
+    topic_id : {type: ObjectId, ref: 'Topic'},
     comment : String,
-    creater : String,
+    creater : {type: ObjectId, ref: 'User'},
     created_at : Date
 });
 
