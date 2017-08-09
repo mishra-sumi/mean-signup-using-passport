@@ -194,6 +194,7 @@ app.controller('indexCtrl', ['$scope', '$location', '$http', function($scope, $l
                 $http.post('/topic/addcomments', { topicId: key._id, comment: key.comment.char })
                 .success(function(data, status){
                     console.log(data);
+                    key.comment.char = "";
                 })
                 .error(function(data){
                     console.log('something went wrong');
